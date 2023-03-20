@@ -43,7 +43,12 @@ class ProductController extends BaseController
         $product = new Product();
         if ($request->isMethod(Request::METHOD_PATCH)) {
             $id = $data['id'] ?? null;
-            if (!$id || !$product = $productManager->getOne($id)) {
+            if (!$id) {
+                return $this->notFound();
+            }
+
+            $product = $productManager->getOne($id);
+            if (!$product) {
                 return $this->notFound();
             }
 
