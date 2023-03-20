@@ -14,11 +14,12 @@ Simple skeleton cached REST API with elastic search implementation
 # install dependencies
 docker-compose run php-cli composer install
 
+# run application
+docker-compose up -d
+
 # install db
 docker-compose run php-cli php bin/console doctrine:migration:migrate
 
-# run application
-docker-compose up -d
 ```
 
 ## List of applictions
