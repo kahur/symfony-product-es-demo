@@ -147,6 +147,11 @@ class ProductManager
         $key = [];
 
         foreach ($filter as $k => $value) {
+            if (is_array($value)) {
+                $key[] = $this->getSearchKey($value);
+                continue;
+            }
+
             $key[] = $k;
             $key[] = strtolower(str_replace($search, $replace, $value));
         }
