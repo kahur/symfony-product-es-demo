@@ -65,7 +65,7 @@ class ProductController extends BaseController
                 'images' => File::class,
                 'files' => File::class,
                 'categories' => Category::class
-            ], [], true);
+            ], []);
 
         $data = json_decode($request->getContent(), 1);
         $form = $this->createForm(ProductValidator::class, $product);

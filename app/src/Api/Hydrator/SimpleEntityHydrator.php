@@ -3,7 +3,6 @@
 namespace KH\Api\Hydrator;
 
 use Doctrine\Persistence\ManagerRegistry;
-use KH\Entity\File;
 use KH\Interfaces\EntityInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -79,6 +78,7 @@ class SimpleEntityHydrator
         $id = is_numeric($data) ? $data : $data['id'] ?? null;
         if ($id && (is_numeric($data) || $fetchEntity)) {
             // this is id let's fetch entity
+
             $entity = $this->managerRegistry->getRepository($targetEntity)->find($id);
             if (!$entity) {
                 return null;

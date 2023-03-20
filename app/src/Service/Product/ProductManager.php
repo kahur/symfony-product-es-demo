@@ -47,8 +47,6 @@ class ProductManager
             $this->crudService->save($product);
             $this->elasticProductRepository->save($product, $update);
 
-            // invalidate cache
-            $this->redisStorage->update('product-' . $product->getId(), $product, self::DEFAULT_GROUPS);
             $this->redisStorage->clearByTags(['search']);
 
             return $product;
@@ -61,9 +59,9 @@ class ProductManager
     public function removeProduct(Product $product): bool
     {
         try {
-            $this->redisStorage->remove('product-' . $product->getId());
             $this->crudService->remove($product);
             $this->elasticProductRepository->remove($product);
+            $this->redisStorage->clearByTags(['search']);
 
             return true;
         } catch (\Exception $e) {
@@ -73,19 +71,12 @@ class ProductManager
 
     public function getOne(int $id): ?Product
     {
-        $cachedProduct = $this->redisStorage->get('product-' . $id);
-        if (!$cachedProduct) {
-            $product = $this->crudService->findOne(Product::class, $id);
-            if (!$product) {
-                return null;
-            }
-
-            $this->redisStorage->save('product-' . $product->getId(), $product, serializeGroups: self::DEFAULT_GROUPS);
-
-            return $product;
+        $product = $this->crudService->findOne(Product::class, $id);
+        if (!$product) {
+            return null;
         }
 
-        return $this->hydrateDataToEntity($cachedProduct);
+        return $product;
 
     }
 
