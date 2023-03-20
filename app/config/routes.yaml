@@ -1,0 +1,6 @@
+api:
+    resource:
+        path: ../src/Api/Controller
+        namespace: KH\Api\Controller
+    type: annotation
+
