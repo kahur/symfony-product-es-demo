@@ -58,6 +58,7 @@ class ProductController extends BaseController
             $product, [
                 'details' => ProductDetail::class,
                 'images' => File::class,
+                'files' => File::class,
                 'categories' => Category::class
             ], [], true);
 
