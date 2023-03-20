@@ -9,6 +9,6 @@ RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     && docker-php-ext-enable redis
 
-RUN mkdir /code/var/files
+RUN mkdir -p /code/var/files
 RUN chown -R www-data /code/var/files
 RUN chmod -R 0777 /code/var/files
